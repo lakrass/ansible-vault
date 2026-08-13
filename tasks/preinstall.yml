@@ -22,7 +22,9 @@
   become: true
   ansible.builtin.package:
     update_cache: true
-  tags: update_cache
+  tags:
+    - update_cache
+    - molecule-idempotence-notest
   when: vault_os_packages | default([]) | length > 0
 
 - name: OS packages

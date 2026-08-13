@@ -9,7 +9,7 @@
 vault_version: "{{ lookup('env', 'VAULT_VERSION') | default('2.0.3', true) }}"
 
 vault_version_release_site_suffix: "{{ '+ent' if vault_enterprise }}{{ '.hsm' if vault_enterprise_hsm }}"
-vault_version_repo_suffix: "{{ '+ent-1' if vault_enterprise }}"
+vault_version_repo_suffix: "{{ '+ent-1' if vault_enterprise else '-1' }}"
 
 vault_architecture_map:
   # this first entry seems... redundant (but it's required for reasons)

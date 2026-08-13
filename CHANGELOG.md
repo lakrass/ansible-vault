@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.2.0](https://github.com/ansible-community/ansible-vault/compare/v5.1.0...v5.2.0) (2026-08-13)
+
+### Features
+
+* allow hsm packages to be installed, refactored repo suffix, ci improvements (fixes [#425](https://github.com/ansible-community/ansible-vault/issues/425)) ([#433](https://github.com/ansible-community/ansible-vault/issues/433)) ([a40c9e1](https://github.com/ansible-community/ansible-vault/commit/a40c9e19ff0417362262600a48de0ec69dd718bd))
+
 ## [5.1.0](https://github.com/ansible-community/ansible-vault/compare/v5.0.1...v5.1.0) (2026-07-06)
 
 ### Features

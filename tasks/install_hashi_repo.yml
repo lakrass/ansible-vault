@@ -81,9 +81,12 @@
 - name: Compute Vault package names for HashiCorp repositories
   ansible.builtin.set_fact:
     _vault_repo_pkg_name: "{{ _vault_repo_pkg_base }}{{ '-hsm' if (vault_enterprise | bool and vault_enterprise_hsm | bool) else '' }}"
-    _vault_repo_conflicting_pkgs: "{{ ['vault', 'vault-enterprise', 'vault-enterprise-hsm'] | difference([_vault_repo_pkg_name]) }}"
   vars:
     _vault_repo_pkg_base: "{{ 'vault' ~ ('-enterprise' if vault_enterprise | bool else '') }}"
+
+- name: Compute conflicting Vault package names for HashiCorp repositories
+  ansible.builtin.set_fact:
+    _vault_repo_conflicting_pkgs: "{{ ['vault', 'vault-enterprise', 'vault-enterprise-hsm'] | difference([_vault_repo_pkg_name]) }}"
 
 - name: Ensure Enterprise package is not present when OSS is desired and vice versa
   ansible.builtin.package:

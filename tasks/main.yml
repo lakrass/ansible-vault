@@ -75,6 +75,7 @@
   changed_when: false  # read-only task
   ignore_errors: true
   register: vault_mlock_capability
+  when: not vault_disable_mlock | bool
 
 - name: Enable non root mlock capability
   become: true
@@ -82,7 +83,9 @@
     cmd: "setcap cap_ipc_lock=+ep {{ vault_bin_path }}/vault"
   register: output
   changed_when: output.rc != 0
-  when: vault_mlock_capability is failed
+  when:
+    - not vault_disable_mlock | bool
+    - vault_mlock_capability is failed
 
 - name: Create directories
   become: true
@@ -99,20 +102,36 @@
       mode: "{{ vault_harden_file_perms | ternary('0555', '0755') }}"
     - path: "{{ vault_data_path }}"
       mode: "0750"
-    - path: "{{ vault_log_path }}"
-      mode: "0750"
-    - path: "{{ vault_run_path }}"
-      mode: "0750"
 
-- name: Enable logrotate for vault
+- name: Create log directory
   become: true
-  ansible.builtin.template:
-    src: "{{ vault_logrotate_template }}"
-    dest: /etc/logrotate.d/vault
-    owner: root
-    group: root
-    mode: "0644"
-  when: vault_enable_logrotate | bool
+  ansible.builtin.file:
+    path: "{{ vault_log_path }}"
+    state: directory
+    owner: "{{ vault_user }}"
+    group: "{{ vault_group }}"
+    mode: "0750"
+  when: vault_enable_log | bool
+
+- name: Create run directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ vault_run_path }}"
+    state: directory
+    owner: "{{ vault_user }}"
+    group: "{{ vault_group }}"
+    mode: "0750"
+  when: not vault_install_hashi_repo | bool
+
+- name: Create {{ vault_log_path }} directory for vault logs
+  become: true
+  ansible.builtin.file:
+    path: "{{ vault_log_path }}"
+    state: directory
+    owner: "{{ vault_user }}"
+    group: "{{ vault_group }}"
+    mode: "0750"
+  when: vault_enable_log | bool
 
 - name: TLS configuration
   ansible.builtin.include_tasks: tls.yml
@@ -224,11 +243,6 @@
   when:
     - vault_configure_enterprise_license | bool
     - vault_license_content | length > 0
-
-- name: "Set Exec output to log path when enabled log"
-  ansible.builtin.set_fact:
-    vault_exec_output: ">> {{ vault_log_path }}/vault.log 2>&1"
-  when: vault_enable_log
 
 - name: BSD init script
   ansible.builtin.template:

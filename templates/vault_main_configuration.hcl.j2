@@ -21,7 +21,7 @@ listener "tcp" {
   {% endif -%}
   {% endif -%}
   {% if not (l.vault_tls_disable | bool) -%}
-  {% if (l.vault_tls_client_ca_file is defined) -%}
+  {% if (l.vault_tls_client_ca_file is defined) and l.vault_tls_client_ca_file != "" -%}
   tls_client_ca_file="{{ l.vault_tls_certs_path }}/{{ l.vault_tls_client_ca_file }}"
   {% endif -%}
   tls_cert_file = "{{ l.vault_tls_certs_path }}/{{ l.vault_tls_cert_file }}"
@@ -50,7 +50,7 @@ listener "tcp" {
   x_forwarded_for_reject_not_present = {{ l.vault_x_forwarded_for_reject_not_present | bool | lower }}
   {% endif -%}
   {% endif -%}
-  {% if (vault_unauthenticated_metrics_access | bool) -%}
+  {% if (l.vault_unauthenticated_metrics_access | default(vault_unauthenticated_metrics_access) | bool) -%}
   telemetry {
     unauthenticated_metrics_access = "true"
   }
@@ -87,6 +87,8 @@ listener "tcp" {
 {% elif vault_backend == 'raft' -%}
   {% include vault_backend_raft with context -%}
 {% endif %}
+
+disable_mlock = {{ vault_disable_mlock | bool | lower }}
 
 {% if vault_service_registration_consul_enable -%}
   {% include vault_service_registration_consul_template with context -%}
@@ -165,4 +167,25 @@ license_path = "{{ vault_license_path }}"
 
 {% if vault_custom_configuration is defined -%}
 {{ vault_custom_configuration }}
+{% endif -%}
+
+{% if vault_enable_log | bool -%}
+{% if vault_log_level is defined -%}
+log_level = "{{ vault_log_level }}"
+{% endif -%}
+{% if vault_log_format is defined -%}
+log_format = "{{ vault_log_format }}"
+{% endif -%}
+{% if vault_log_file is defined and vault_log_file | length > 0 -%}
+log_file = "{{ vault_log_file }}"
+{% endif -%}
+{% if vault_log_rotate_duration is defined -%}
+log_rotate_duration = "{{ vault_log_rotate_duration }}"
+{% endif -%}
+{% if vault_log_rotate_bytes is defined -%}
+log_rotate_bytes = {{ vault_log_rotate_bytes | int }}
+{% endif -%}
+{% if vault_log_rotate_max_files is defined -%}
+log_rotate_max_files = {{ vault_log_rotate_max_files | int }}
+{% endif -%}
 {% endif -%}

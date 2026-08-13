@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [5.1.0](https://github.com/ansible-community/ansible-vault/compare/v5.0.1...v5.1.0) (2026-07-06)
+
+### Features
+
+* allow to configure `unauthenticated_metrics_access` for each tcp listener ([#427](https://github.com/ansible-community/ansible-vault/issues/427)) ([67e0e61](https://github.com/ansible-community/ansible-vault/commit/67e0e615ff4679e27f57492076f42ae9a2edfc73))
+
+## [5.0.1](https://github.com/ansible-community/ansible-vault/compare/v5.0.0...v5.0.1) (2026-07-06)
+
+### Bug Fixes
+
+* multiple fixes, see details ([97f2851](https://github.com/ansible-community/ansible-vault/commit/97f2851a6ecb77d8e2037dcb823efa2e47f02f26)), closes [#368](https://github.com/ansible-community/ansible-vault/issues/368) [#370](https://github.com/ansible-community/ansible-vault/issues/370) [#369](https://github.com/ansible-community/ansible-vault/issues/369) [#339](https://github.com/ansible-community/ansible-vault/issues/339) [#287](https://github.com/ansible-community/ansible-vault/issues/287)
+
+## [5.0.0](https://github.com/ansible-community/ansible-vault/compare/v4.0.1...v5.0.0) (2026-07-03)
+
+### ⚠ BREAKING CHANGES
+
+* support Vault-based logging and remove old logrotate (#423)
+
+### Features
+
+* support Vault-based logging and remove old logrotate ([#423](https://github.com/ansible-community/ansible-vault/issues/423)) ([ffcc094](https://github.com/ansible-community/ansible-vault/commit/ffcc0944ab49861c47a907c19cc62417e5517d7d))
+
+## [4.0.1](https://github.com/ansible-community/ansible-vault/compare/v4.0.0...v4.0.1) (2026-07-03)
+
+### Bug Fixes
+
+* add become: true to task 'Update package cache' ([#424](https://github.com/ansible-community/ansible-vault/issues/424)) ([51693d2](https://github.com/ansible-community/ansible-vault/commit/51693d2409eb52b6b8d8a8e7011e0f294cfe8c39))
+
 ## [4.0.0](https://github.com/ansible-community/ansible-vault/compare/v3.7.2...v4.0.0) (2026-05-19)
 
 ### ⚠ BREAKING CHANGES

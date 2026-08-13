@@ -45,6 +45,8 @@ jobs:
           path: ansible-vault
       - name: molecule
         uses: gofrolist/molecule-action@v2
+        env:
+          ANSIBLE_ROLES_PATH: "/github/workspace:/github/home/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles"
         with:
           molecule_working_dir: ansible-vault
           molecule_command: test

@@ -389,6 +389,8 @@ vault_ocikms_management_endpoint: "{{ lookup('env', 'VAULT_OCIKMS_MANAGEMENT_END
 
 # pkcs11 seal
 vault_enterprise_hsm: false
+# Group granting access to the PKCS#11 token; only applied when it already exists
+vault_hsm_group: pkcs11
 # WARNING: the following variable is deprecated as this section will become
 #          _only_ a pkcs11 seal soon. Please take note that vault_hsm_app will
 #          soon be removed!

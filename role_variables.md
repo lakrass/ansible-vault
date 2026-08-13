@@ -1141,6 +1141,13 @@ The role can configure HSM based instances. Make sure to reference the [HSM supp
 - Set to True if using hsm binary. Basically just includes ".hsm" in "vault_version" var
 - Default value: false
 
+## `vault_hsm_group`
+
+- Group that grants access to the PKCS#11 token/device. When `vault_enterprise_hsm` is
+  enabled and this group already exists on the host, the Vault user is appended to it.
+  The group is never created by the role.
+- Default value: `pkcs11`
+
 ## `vault_configure_enterprise_license`
 
 - Manage enterprise license file with this role. Set to `true` to use `vault_license_path`, and `vault_license_file` or `vault_license_content`.
